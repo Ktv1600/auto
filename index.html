@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Taller de servicio técnico automotriz de alta precisión. Diagnóstico electrónico, mecánica general, mantenciones y más." />
+  <title>AutoPrecision | Servicio Técnico Automotriz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','sans-serif'], display: ['Poppins','sans-serif'] },
+          colors: {
+            void:'#0A0C12', surface:'#12151F', panel:'#1C2033',
+            steel:'#8B95A8', chrome:'#C8D0DC', snow:'#EEF1F6',
+            cyan:{ DEFAULT:'#00D4FF', dim:'#00A8CC' },
+            amber:{ DEFAULT:'#F5A623', dim:'#C8841A' },
+            edge:'#252A3B',
+          },
+          boxShadow: { card:'0 4px 32px rgba(0,0,0,0.45)' },
+          backgroundImage: { 'grid-lines':`linear-gradient(rgba(37,42,59,0.6) 1px, transparent 1px),linear-gradient(90deg, rgba(37,42,59,0.6) 1px, transparent 1px)` },
+          backgroundSize: { grid:'40px 40px' },
+        },
+      },
+    };
+  </script>
+  <style>
+    html{scroll-behavior:smooth}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0A0C12}::-webkit-scrollbar-thumb{background:#252A3B;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#00D4FF}
+    .text-gradient{background:linear-gradient(135deg,#00D4FF 0%,#EEF1F6 60%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .text-gradient-amber{background:linear-gradient(135deg,#F5A623 0%,#EEF1F6 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .divider-cyan{height:1px;background:linear-gradient(90deg,transparent,#00D4FF,transparent);opacity:.4}
+    .glass{background:rgba(18,21,31,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+    .service-card{transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+    .service-card:hover{transform:translateY(-6px);box-shadow:0 8px 40px rgba(0,212,255,.15);border-color:rgba(0,212,255,.4)}
+    .btn-primary{position:relative;overflow:hidden;transition:all .3s ease}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,255,.4)}
+    .btn-outline{transition:all .3s ease}
+    .btn-outline:hover{background:rgba(0,212,255,.08);transform:translateY(-2px)}
+    .form-input{background:rgba(28,32,51,.8);border:1px solid #252A3B;color:#EEF1F6;transition:border-color .25s ease,box-shadow .25s ease}
+    .form-input:focus{outline:none;border-color:#00D4FF;box-shadow:0 0 0 3px rgba(0,212,255,.12)}
+    .form-input::placeholder{color:#8B95A8}
+    .form-input.error{border-color:#F87171}
+    .pulse-dot{display:inline-block;width:8px;height:8px;background:#22C55E;border-radius:50%;animation:pulse-ring 2s infinite}
+    @keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+    .hero-ring{border:1px solid rgba(0,212,255,.12);border-top-color:rgba(0,212,255,.5)}
+    #mobile-menu{max-height:0;overflow:hidden;transition:max-height .4s ease}
+    #mobile-menu.open{max-height:400px}
+    .whatsapp-fab{transition:transform .3s ease,box-shadow .3s ease;box-shadow:0 4px 24px rgba(37,211,102,.4)}
+    .whatsapp-fab:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 8px 36px rgba(37,211,102,.6)}
+    #toast{transition:opacity .4s ease,transform .4s ease}
+    #toast.show{opacity:1!important;transform:translateY(0)!important}
+    @keyframes spin-slow{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    .ring-spin{animation:spin-slow 18s linear infinite}
+    .ring-spin-r{animation:spin-slow 12s linear infinite reverse}
+    @keyframes float-arrow{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+    .float-arrow{animation:float-arrow 4s ease-in-out infinite}
+    @keyframes float-icon{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  </style>
+</head>
+<body class="bg-void text-chrome font-sans antialiased">
+
+<!-- NAVBAR -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 glass border-b border-edge transition-all duration-300">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <a href="#inicio" class="flex items-center gap-3">
+        <div class="w-9 h-9 flex-shrink-0">
+          <svg viewBox="0 0 36 36" fill="none" class="w-full h-full">
+            <circle cx="18" cy="18" r="17" stroke="#00D4FF" stroke-width="1.5" opacity=".4"/>
+            <path d="M18 10.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zm0 12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z" fill="#00D4FF" opacity=".9"/>
+            <path d="M19.5 14.5l-3.5 5h3l-1 4.5 4.5-6h-3.2l.2-3.5z" fill="#F5A623"/>
+          </svg>
+        </div>
+        <div class="leading-tight">
+          <span class="font-display text-lg font-bold text-snow block leading-none">Auto<span class="text-cyan">Precision</span></span>
+          <span class="text-steel text-[10px] font-medium tracking-widest uppercase">Servicio Técnico</span>
+        </div>
+      </a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm font-medium">
+        <li><a href="#servicios" class="text-steel hover:text-cyan transition-colors">Servicios</a></li>
+        <li><a href="#por-que-elegirnos" class="text-steel hover:text-cyan transition-colors">¿Por qué nosotros?</a></li>
+        <li><a href="#contacto" class="text-steel hover:text-cyan transition-colors">Contacto</a></li>
+      </ul>
+      <div class="hidden lg:flex items-center gap-3">
+        <span class="text-steel text-xs flex items-center gap-1.5"><span class="pulse-dot"></span> Abierto ahora</span>
+        <a href="#contacto" class="btn-primary bg-cyan text-void font-semibold text-sm px-5 py-2.5 rounded-lg">Agendar diagnóstico</a>
+      </div>
+      <button id="menu-toggle" class="lg:hidden p-2 rounded-lg text-steel hover:text-cyan hover:bg-panel transition-colors" aria-label="Abrir menú" aria-expanded="false">
+        <svg id="icon-menu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="lg:hidden border-t border-edge">
+      <ul class="flex flex-col gap-1 py-4">
+        <li><a href="#servicios" class="mobile-link block px-4 py-3 rounded-lg text-steel hover:text-cyan hover:bg-panel transition-colors">Servicios</a></li>
+        <li><a href="#por-que-elegirnos" class="mobile-link block px-4 py-3 rounded-lg text-steel hover:text-cyan hover:bg-panel transition-colors">¿Por qué nosotros?</a></li>
+        <li><a href="#contacto" class="mobile-link block px-4 py-3 rounded-lg text-steel hover:text-cyan hover:bg-panel transition-colors">Contacto</a></li>
+        <li class="pt-2 px-4"><a href="#contacto" class="btn-primary mobile-link block text-center bg-cyan text-void font-semibold text-sm px-5 py-3 rounded-lg">Agendar diagnóstico</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="inicio" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+  <div class="absolute inset-0 bg-grid-lines bg-grid opacity-30 pointer-events-none"></div>
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full" style="background:radial-gradient(circle,rgba(0,212,255,.08) 0%,transparent 70%)"></div>
+    <div class="absolute -bottom-20 -right-20 w-96 h-96 rounded-full" style="background:radial-gradient(circle,rgba(245,166,35,.06) 0%,transparent 70%)"></div>
+  </div>
+  <div class="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block pointer-events-none">
+    <div class="hero-ring ring-spin w-96 h-96 rounded-full"></div>
+    <div class="absolute inset-8 hero-ring ring-spin-r rounded-full"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <svg class="w-28 h-28 opacity-10" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="45" stroke="#00D4FF" stroke-width="2"/>
+        <path d="M50 20a30 30 0 1 0 0 60 30 30 0 0 0 0-60zm0 48a18 18 0 1 1 0-36 18 18 0 0 1 0 36z" fill="#00D4FF"/>
+        <path d="M53 35l-9 14h7l-3 12 12-17h-8l1-9z" fill="#F5A623"/>
+      </svg>
+    </div>
+  </div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+    <div class="max-w-2xl">
+      <div class="inline-flex items-center gap-2 bg-panel border border-edge rounded-full px-4 py-1.5 mb-8 reveal">
+        <span class="pulse-dot"></span>
+        <span class="text-steel text-xs font-medium tracking-wide">Diagnóstico disponible · Técnicos certificados</span>
+      </div>
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] mb-6 reveal reveal-delay-1">
+        Tu vehículo merece<br/><span class="text-gradient">precisión real.</span>
+      </h1>
+      <p class="text-steel text-lg sm:text-xl leading-relaxed mb-10 max-w-xl reveal reveal-delay-2">
+        Diagnóstico electrónico de última generación, mecánica certificada y garantía en cada intervención.
+        <strong class="text-chrome font-medium">Porque un motor bien cuidado no falla.</strong>
+      </p>
+      <div class="flex flex-wrap gap-4 reveal reveal-delay-3">
+        <a href="#contacto" class="btn-primary bg-cyan text-void font-semibold text-sm sm:text-base px-7 py-3.5 rounded-xl inline-flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Agendar diagnóstico
+        </a>
+        <a href="#servicios" class="btn-outline border border-edge text-chrome font-semibold text-sm sm:text-base px-7 py-3.5 rounded-xl inline-flex items-center gap-2">
+          Ver servicios
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+      <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-14 pt-8 border-t border-edge reveal reveal-delay-4">
+        <div><p class="font-display text-2xl sm:text-3xl font-bold text-cyan">+12 años</p><p class="text-steel text-xs sm:text-sm mt-1">de experiencia</p></div>
+        <div><p class="font-display text-2xl sm:text-3xl font-bold text-amber">+5.000</p><p class="text-steel text-xs sm:text-sm mt-1">vehículos atendidos</p></div>
+        <div><p class="font-display text-2xl sm:text-3xl font-bold text-cyan">100%</p><p class="text-steel text-xs sm:text-sm mt-1">garantía escrita</p></div>
+      </div>
+    </div>
+  </div>
+  <a href="#servicios" class="float-arrow absolute bottom-8 left-1/2 text-steel hover:text-cyan transition-colors" aria-label="Ir a servicios">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+  </a>
+</section>
+
+<div class="divider-cyan max-w-5xl mx-auto my-2"></div>
+
+<!-- SERVICIOS -->
+<section id="servicios" class="py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <span class="text-cyan text-xs font-semibold tracking-[.25em] uppercase">Lo que hacemos</span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-snow mt-3 mb-4">Servicios <span class="text-gradient">especializados</span></h2>
+      <p class="text-steel text-base sm:text-lg max-w-xl mx-auto">Cada servicio ejecutado con protocolos de taller certificado y tecnología de diagnóstico actualizada.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+
+      <article class="service-card bg-surface border border-edge rounded-2xl p-6 reveal reveal-delay-1">
+        <div class="w-12 h-12 bg-cyan/10 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3 class="font-display text-lg font-semibold text-snow mb-2">Mecánica General</h3>
+        <p class="text-steel text-sm leading-relaxed">Revisión y reparación de motor, transmisión, embrague y todos los sistemas mecánicos de tu vehículo.</p>
+        <div class="mt-5 pt-4 border-t border-edge"><span class="text-cyan text-xs font-medium">Motor · Transmisión · Distribución</span></div>
+      </article>
+
+      <article class="service-card bg-surface border border-edge rounded-2xl p-6 reveal reveal-delay-2">
+        <div class="w-12 h-12 bg-amber/10 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="font-display text-lg font-semibold text-snow mb-2">Scanner / Diagnóstico</h3>
+        <p class="text-steel text-sm leading-relaxed">Lectura avanzada de códigos OBD-II, análisis de módulos ECU, ABS, airbags y sistemas electrónicos.</p>
+        <div class="mt-5 pt-4 border-t border-edge"><span class="text-amber text-xs font-medium">OBD-II · ECU · Módulos CAN</span></div>
+      </article>
+
+      <article class="service-card bg-surface border border-edge rounded-2xl p-6 reveal reveal-delay-3">
+        <div class="w-12 h-12 bg-cyan/10 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-display text-lg font-semibold text-snow mb-2">Mantenciones Preventivas</h3>
+        <p class="text-steel text-sm leading-relaxed">Cambio de aceite, filtros, bujías, correas y revisión general según kilometraje del fabricante.</p>
+        <div class="mt-5 pt-4 border-t border-edge"><span class="text-cyan text-xs font-medium">Aceite · Filtros · Revisión 30 puntos</span></div>
+      </article>
+
+      <article class="service-card bg-surface border border-edge rounded-2xl p-6 reveal reveal-delay-1">
+        <div class="w-12 h-12 bg-amber/10 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg>
+        </div>
+        <h3 class="font-display text-lg font-semibold text-snow mb-2">Frenos y Suspensión</h3>
+        <p class="text-steel text-sm leading-relaxed">Revisión y cambio de pastillas, discos, amortiguadores, brazos y rótulas con componentes certificados.</p>
+        <div class="mt-5 pt-4 border-t border-edge"><span class="text-amber text-xs font-medium">ABS · Amortiguadores · Dirección</span></div>
+      </article>
+
+      <article class="service-card bg-surface border border-edge rounded-2xl p-6 reveal reveal-delay-2">
+        <div class="w-12 h-12 bg-cyan/10 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+        </div>
+        <h3 class="font-display text-lg font-semibold text-snow mb-2">Climatización A/C</h3>
+        <p class="text-steel text-sm leading-relaxed">Carga de gas refrigerante, limpieza de evaporador, revisión de compresor y diagnóstico completo del sistema.</p>
+        <div class="mt-5 pt-4 border-t border-edge"><span class="text-cyan text-xs font-medium">Gas R-134a · Compresor · Filtro</span></div>
+      </article>
+
+      <article class="service-card bg-surface border border-edge rounded-2xl p-6 reveal reveal-delay-3">
+        <div class="w-12 h-12 bg-amber/10 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+        </div>
+        <h3 class="font-display text-lg font-semibold text-snow mb-2">Eléctrico Automotriz</h3>
+        <p class="text-steel text-sm leading-relaxed">Diagnóstico y reparación de instalación eléctrica, batería, alternador, luces y sensores.</p>
+        <div class="mt-5 pt-4 border-t border-edge"><span class="text-amber text-xs font-medium">Batería · Alternador · Sensores</span></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider-cyan max-w-5xl mx-auto my-2"></div>
+
+<!-- POR QUÉ ELEGIRNOS -->
+<section id="por-que-elegirnos" class="py-20 lg:py-28 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-96" style="background:radial-gradient(ellipse,rgba(0,212,255,.04) 0%,transparent 70%)"></div>
+  </div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <span class="text-cyan text-xs font-semibold tracking-[.25em] uppercase">Nuestra diferencia</span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-snow mt-3 mb-4">¿Por qué <span class="text-gradient-amber">elegirnos?</span></h2>
+      <p class="text-steel text-base sm:text-lg max-w-xl mx-auto">No somos solo un taller. Somos tu socio técnico de confianza a largo plazo.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-panel border border-edge rounded-2xl p-6 text-center group hover:border-cyan/40 transition-colors duration-300 reveal reveal-delay-1">
+        <div class="w-14 h-14 bg-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cyan/20 transition-colors">
+          <svg class="w-7 h-7 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="font-display text-base font-semibold text-snow mb-2">Garantía escrita</h3>
+        <p class="text-steel text-sm leading-relaxed">Cada reparación respaldada por garantía documental. Tu tranquilidad no es opcional.</p>
+      </div>
+      <div class="bg-panel border border-edge rounded-2xl p-6 text-center group hover:border-amber/40 transition-colors duration-300 reveal reveal-delay-2">
+        <div class="w-14 h-14 bg-amber/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-amber/20 transition-colors">
+          <svg class="w-7 h-7 text-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        </div>
+        <h3 class="font-display text-base font-semibold text-snow mb-2">Repuestos de calidad</h3>
+        <p class="text-steel text-sm leading-relaxed">Solo usamos piezas originales o de primera línea. Nunca comprometeremos la seguridad de tu auto.</p>
+      </div>
+      <div class="bg-panel border border-edge rounded-2xl p-6 text-center group hover:border-cyan/40 transition-colors duration-300 reveal reveal-delay-3">
+        <div class="w-14 h-14 bg-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cyan/20 transition-colors">
+          <svg class="w-7 h-7 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-display text-base font-semibold text-snow mb-2">Entrega en tiempo</h3>
+        <p class="text-steel text-sm leading-relaxed">Tiempos de reparación honestos y cumplidos. Te informamos en cada etapa del proceso.</p>
+      </div>
+      <div class="bg-panel border border-edge rounded-2xl p-6 text-center group hover:border-amber/40 transition-colors duration-300 reveal reveal-delay-4">
+        <div class="w-14 h-14 bg-amber/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-amber/20 transition-colors">
+          <svg class="w-7 h-7 text-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+        </div>
+        <h3 class="font-display text-base font-semibold text-snow mb-2">Técnicos certificados</h3>
+        <p class="text-steel text-sm leading-relaxed">Equipo con certificaciones actualizadas en mecánica moderna, híbridos y sistemas electrónicos.</p>
+      </div>
+    </div>
+    <div class="mt-12 bg-surface border border-cyan/20 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 reveal">
+      <div class="w-16 h-16 flex-shrink-0 bg-cyan/10 rounded-xl flex items-center justify-center">
+        <svg class="w-8 h-8 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+      </div>
+      <div class="text-center sm:text-left">
+        <p class="font-display text-lg font-bold text-snow mb-1">+5.000 clientes confían en nosotros</p>
+        <p class="text-steel text-sm">Más de 12 años operando en la región con la misma promesa: honestidad técnica y resultados comprobados.</p>
+      </div>
+      <a href="#contacto" class="ml-auto flex-shrink-0 btn-primary bg-cyan text-void font-semibold text-sm px-6 py-3 rounded-xl whitespace-nowrap hidden sm:block">Contactar ahora</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider-cyan max-w-5xl mx-auto my-2"></div>
+
+<!-- CONTACTO -->
+<section id="contacto" class="py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <div class="reveal">
+        <span class="text-cyan text-xs font-semibold tracking-[.25em] uppercase">Háblanos</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-snow mt-3 mb-5">Agenda tu <span class="text-gradient">revisión</span></h2>
+        <p class="text-steel text-base sm:text-lg leading-relaxed mb-8">Completa el formulario o escríbenos por WhatsApp. Respondemos en menos de 2 horas en horario de atención.</p>
+        <ul class="space-y-5">
+          <li class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-panel border border-edge rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div><p class="text-snow font-medium text-sm">Dirección</p><p class="text-steel text-sm mt-0.5">Av. Los Mecánicos 1420, Local 5<br/>Santiago, Chile</p></div>
+          </li>
+          <li class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-panel border border-edge rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            </div>
+            <div><p class="text-snow font-medium text-sm">Teléfono / WhatsApp</p><a href="tel:+56912345678" class="text-steel text-sm hover:text-cyan transition-colors">+56 9 1234 5678</a></div>
+          </li>
+          <li class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-panel border border-edge rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div><p class="text-snow font-medium text-sm">Horarios de atención</p><p class="text-steel text-sm mt-0.5">Lun – Vie: 08:00 – 19:00<br/>Sábado: 09:00 – 14:00</p></div>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-surface border border-edge rounded-2xl p-6 sm:p-8 reveal reveal-delay-2">
+        <form id="contact-form" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="nombre" class="block text-sm font-medium text-chrome mb-1.5">Nombre completo <span class="text-cyan">*</span></label>
+              <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" class="form-input w-full rounded-xl px-4 py-3 text-sm" required/>
+              <p class="field-error text-xs text-red-400 mt-1 hidden">Este campo es requerido.</p>
+            </div>
+            <div>
+              <label for="telefono" class="block text-sm font-medium text-chrome mb-1.5">Teléfono <span class="text-cyan">*</span></label>
+              <input type="tel" id="telefono" name="telefono" placeholder="+56 9 XXXX XXXX" class="form-input w-full rounded-xl px-4 py-3 text-sm" required/>
+              <p class="field-error text-xs text-red-400 mt-1 hidden">Ingresa un número válido.</p>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="correo" class="block text-sm font-medium text-chrome mb-1.5">Correo electrónico <span class="text-cyan">*</span></label>
+            <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" class="form-input w-full rounded-xl px-4 py-3 text-sm" required/>
+            <p class="field-error text-xs text-red-400 mt-1 hidden">Ingresa un correo válido.</p>
+          </div>
+          <div class="mb-4">
+            <label for="vehiculo" class="block text-sm font-medium text-chrome mb-1.5">Modelo y año del vehículo <span class="text-cyan">*</span></label>
+            <input type="text" id="vehiculo" name="vehiculo" placeholder="Ej: Toyota Corolla 2019" class="form-input w-full rounded-xl px-4 py-3 text-sm" required/>
+            <p class="field-error text-xs text-red-400 mt-1 hidden">Ingresa el modelo y año.</p>
+          </div>
+          <div class="mb-6">
+            <label for="motivo" class="block text-sm font-medium text-chrome mb-1.5">Motivo de consulta <span class="text-cyan">*</span></label>
+            <textarea id="motivo" name="motivo" rows="4" placeholder="Describe brevemente el problema o el servicio que necesitas…" class="form-input w-full rounded-xl px-4 py-3 text-sm resize-none" required></textarea>
+            <p class="field-error text-xs text-red-400 mt-1 hidden">Describe tu consulta.</p>
+          </div>
+          <button type="submit" class="btn-primary w-full bg-cyan text-void font-semibold text-sm py-3.5 rounded-xl flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            Enviar consulta
+          </button>
+          <p class="text-steel text-xs text-center mt-3">También puedes escribirnos por <a href="https://wa.me/56912345678?text=Hola%2C+quiero+consultar+por+un+servicio+para+mi+veh%C3%ADculo" target="_blank" rel="noopener" class="text-green-400 hover:text-green-300 font-medium">WhatsApp</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-surface border-t border-edge">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 py-14">
+      <div>
+        <a href="#inicio" class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 flex-shrink-0">
+            <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17" stroke="#00D4FF" stroke-width="1.5" opacity=".4"/><path d="M18 10.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zm0 12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z" fill="#00D4FF" opacity=".9"/><path d="M19.5 14.5l-3.5 5h3l-1 4.5 4.5-6h-3.2l.2-3.5z" fill="#F5A623"/></svg>
+          </div>
+          <span class="font-display text-base font-bold text-snow">Auto<span class="text-cyan">Precision</span></span>
+        </a>
+        <p class="text-steel text-sm leading-relaxed">Servicio técnico automotriz de precisión. Diagnóstico honesto, reparación garantizada.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-snow text-sm mb-4">Servicios</h4>
+        <ul class="space-y-2.5 text-sm text-steel">
+          <li><a href="#servicios" class="hover:text-cyan transition-colors">Mecánica general</a></li>
+          <li><a href="#servicios" class="hover:text-cyan transition-colors">Diagnóstico electrónico</a></li>
+          <li><a href="#servicios" class="hover:text-cyan transition-colors">Mantenciones</a></li>
+          <li><a href="#servicios" class="hover:text-cyan transition-colors">Frenos y suspensión</a></li>
+          <li><a href="#servicios" class="hover:text-cyan transition-colors">Climatización</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-snow text-sm mb-4">Horarios</h4>
+        <ul class="space-y-2.5 text-sm text-steel">
+          <li class="flex justify-between gap-4"><span>Lun – Vie</span><span class="text-chrome font-medium">08:00 – 19:00</span></li>
+          <li class="flex justify-between gap-4"><span>Sábado</span><span class="text-chrome font-medium">09:00 – 14:00</span></li>
+          <li class="flex justify-between gap-4"><span>Domingo</span><span class="text-red-400 font-medium">Cerrado</span></li>
+        </ul>
+        <div class="mt-4 flex items-center gap-2"><span class="pulse-dot"></span><span class="text-green-400 text-xs font-medium">Abierto ahora</span></div>
+      </div>
+      <div>
+        <h4 class="font-semibold text-snow text-sm mb-4">Contacto</h4>
+        <ul class="space-y-3 text-sm text-steel">
+          <li><a href="tel:+56912345678" class="hover:text-cyan transition-colors flex items-center gap-2"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>+56 9 1234 5678</a></li>
+          <li><a href="mailto:contacto@autoprecision.cl" class="hover:text-cyan transition-colors flex items-center gap-2"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>contacto@autoprecision.cl</a></li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Av. Los Mecánicos 1420<br/>Santiago, Chile</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-edge py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-steel">
+      <p>&copy; 2026 AutoPrecision. Todos los derechos reservados.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" class="hover:text-cyan transition-colors">Política de privacidad</a>
+        <span>|</span>
+        <a href="#" class="hover:text-cyan transition-colors">Términos de servicio</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FAB -->
+<a id="whatsapp-fab" href="https://wa.me/56912345678?text=Hola%2C+quiero+consultar+por+un+servicio+para+mi+veh%C3%ADculo" target="_blank" rel="noopener noreferrer"
+   class="whatsapp-fab fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center" aria-label="WhatsApp">
+  <span id="wa-tooltip" class="absolute right-16 bg-surface border border-edge text-snow text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none hidden sm:block" style="opacity:0;transition:opacity .2s ease">Escríbenos por WhatsApp</span>
+  <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- TOAST -->
+<div id="toast" class="fixed top-6 right-6 z-[100] bg-green-900/90 border border-green-500/40 text-green-300 text-sm font-medium px-5 py-4 rounded-xl flex items-center gap-3" style="opacity:0;transform:translateY(-16px)" role="alert" aria-live="polite">
+  <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+  <span>¡Consulta enviada con éxito! Te contactaremos pronto.</span>
+</div>
+
+<script>
+'use strict';
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('shadow-lg',scrollY>40),{passive:true});
+const menuToggle=document.getElementById('menu-toggle'),mobileMenu=document.getElementById('mobile-menu'),iconMenu=document.getElementById('icon-menu'),iconClose=document.getElementById('icon-close');
+menuToggle.addEventListener('click',()=>{const o=mobileMenu.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(o));iconMenu.classList.toggle('hidden',o);iconClose.classList.toggle('hidden',!o);});
+document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{mobileMenu.classList.remove('open');iconMenu.classList.remove('hidden');iconClose.classList.add('hidden');menuToggle.setAttribute('aria-expanded','false');}));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const form=document.getElementById('contact-form');
+function vf(f){const err=f.parentElement.querySelector('.field-error');let ok=true;f.classList.remove('error');if(f.required&&!f.value.trim()){ok=false;if(err)err.textContent='Este campo es requerido.';}else if(f.type==='email'&&f.value.trim()&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim())){ok=false;if(err)err.textContent='Ingresa un correo válido.';}else if(f.type==='tel'&&f.value.trim()&&!/^[\d\s\+\-\(\)]{7,20}$/.test(f.value.trim())){ok=false;if(err)err.textContent='Número inválido.';}if(err)err.classList.toggle('hidden',ok);if(!ok)f.classList.add('error');return ok;}
+form.querySelectorAll('input,textarea').forEach(f=>{f.addEventListener('blur',()=>vf(f));f.addEventListener('input',()=>{if(f.classList.contains('error'))vf(f);});});
+form.addEventListener('submit',e=>{e.preventDefault();if([...form.querySelectorAll('[required]')].map(vf).every(Boolean)){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4500);form.reset();}});
+const fab=document.getElementById('whatsapp-fab'),tt=document.getElementById('wa-tooltip');
+if(fab&&tt){fab.addEventListener('mouseenter',()=>tt.style.opacity='1');fab.addEventListener('mouseleave',()=>tt.style.opacity='0');}
+</script>
+</body>
+</html>
